@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import GoldDivider from './GoldDivider';
+import GoldDivider from '@/components/wedding/GoldDivider';
 
 export default function HeroSection({ bgImage, onOpenCard }) {
     return (

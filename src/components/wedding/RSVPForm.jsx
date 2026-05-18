@@ -4,9 +4,9 @@ import { supabase } from '@/lib/supabaseClient';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { CheckCircle, XCircle, Send } from 'lucide-react';
-import GlassCard from './GlassCard';
-import AnimatedSection from './AnimatedSection';
-import GoldDivider from './GoldDivider';
+import GlassCard from '@/components/wedding/GlassCard';
+import AnimatedSection from '@/components/wedding/AnimatedSection';
+import GoldDivider from '@/components/wedding/GoldDivider';
 import { toast } from 'sonner';
 
 export default function RSVPForm() {

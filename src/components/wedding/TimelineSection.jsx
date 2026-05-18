@@ -1,11 +1,11 @@
-import AnimatedSection from './AnimatedSection';
-import GoldDivider from './GoldDivider';
+import AnimatedSection from '@/components/wedding/AnimatedSection';
+import GoldDivider from '@/components/wedding/GoldDivider';
 
 const events = [
     { time: '10:00 pagi', label: 'Majlis Nikah' },
     { time: '12:00 tengah hari', label: 'Majlis Bermula' },
     { time: '12:30 tengah hari', label: 'Ketibaan Pengantin' },
-    { time: '05:00 petang', label: 'Majlis Berakhir' },
+    { time: '04:30 petang', label: 'Majlis Berakhir' },
 ];
 
 export default function TimelineSection() {

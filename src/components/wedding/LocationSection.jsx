@@ -1,7 +1,7 @@
 import { MapPin, Navigation } from 'lucide-react';
-import AnimatedSection from './AnimatedSection';
-import GlassCard from './GlassCard';
-import GoldDivider from './GoldDivider';
+import AnimatedSection from '@/components/wedding/AnimatedSection';
+import GlassCard from '@/components/wedding/GlassCard';
+import GoldDivider from '@/components/wedding/GoldDivider';
 
 export default function LocationSection() {
     const venue = 'Lavender Event Space, Skudai';

@@ -6,9 +6,9 @@ import { Plus, Send, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
-import AnimatedSection from './AnimatedSection';
-import GlassCard from './GlassCard';
-import GoldDivider from './GoldDivider';
+import AnimatedSection from '@/components/wedding/AnimatedSection';
+import GlassCard from '@/components/wedding/GlassCard';
+import GoldDivider from '@/components/wedding/GoldDivider';
 import { toast } from 'sonner';
 
 export default function GuestbookSection() {
@@ -38,12 +38,13 @@ export default function GuestbookSection() {
       if (error) throw error;
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['guestbook'] });
+      // Kita tidak perlu invalidateQueries di sini kerana 
+      // listener realtime di bawah akan mengendalikan kemas kini cache
       setShowForm(false);
       setNama('');
       setRelation('');
       setMessage('');
-      toast.success('Ucapan anda telah dihantar!');
+      // toast.success('Ucapan anda telah dihantar!'); // Pindahkan ke listener realtime untuk elakkan double toast
     },
   });
 
@@ -55,10 +56,15 @@ export default function GuestbookSection() {
         'postgres_changes',
         { event: 'INSERT', schema: 'public', table: 'guestbook' },
         (payload) => {
-          // Update cache React Query
-          queryClient.setQueryData(['guestbook'], (old = []) => [payload.new, ...old]);
+          // Update cache React Query secara manual
+          queryClient.setQueryData(['guestbook'], (old = []) => {
+            // Semak jika ID sudah wujud dalam cache untuk elakkan duplikasi
+            const exists = old.some(msg => msg.id === payload.new.id);
+            if (exists) return old;
+            return [payload.new, ...old];
+          });
 
-          // Toast realtime
+          // Toast realtime (Hanya satu toast akan muncul di sini)
           toast.success(`Ucapan baru dari ${payload.new.nama}: "${payload.new.message}"`);
         }
       )

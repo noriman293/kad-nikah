@@ -1,10 +1,10 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { UserCheck, Phone, MapPin, Calendar } from 'lucide-react';
-import RSVPForm from './RSVPForm';
-import ContactSection from './ContactSection';
-import LocationSection from './LocationSection';
-import CalendarSection from './CalendarSection';
+import RSVPForm from '@/components/wedding/RSVPForm';
+import ContactSection from '@/components/wedding/ContactSection';
+import LocationSection from '@/components/wedding/LocationSection';
+import CalendarSection from '@/components/wedding/CalendarSection';
 
 const tabs = [
     { id: 'rsvp', icon: UserCheck, label: 'RSVP' },

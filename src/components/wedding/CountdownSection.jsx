@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import AnimatedSection from './AnimatedSection';
-import GoldDivider from './GoldDivider';
+import AnimatedSection from '@/components/wedding/AnimatedSection';
+import GoldDivider from '@/components/wedding/GoldDivider';
 
 const WEDDING_DATE = new Date('2026-12-19T11:00:00+08:00');
 

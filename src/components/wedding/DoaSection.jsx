@@ -1,5 +1,5 @@
-import AnimatedSection from './AnimatedSection';
-import GoldDivider from './GoldDivider';
+import AnimatedSection from '@/components/wedding/AnimatedSection';
+import GoldDivider from '@/components/wedding/GoldDivider';
 
 export default function DoaSection({ floralFrameUrl }) {
     return (
