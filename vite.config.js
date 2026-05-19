@@ -9,8 +9,8 @@ export default defineConfig({
       '@': path.resolve(__dirname, './src'),
     },
   },
-  base: './', // penting untuk Netlify supaya path relative
+  base: './',   // penting untuk Netlify
   build: {
-    outDir: 'dist', // confirm output folder betul
+    outDir: 'dist',
   },
 })
