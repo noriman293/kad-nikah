@@ -14,6 +14,7 @@ export default function GuestbookSection() {
   const [showForm, setShowForm] = useState(false);
   const [nama, setNama] = useState('');
   const [relation, setRelation] = useState('');
+  const [message, setMessage] = useState('');
   const [messages, setMessages] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [isFetching, setIsFetching] = useState(false);
