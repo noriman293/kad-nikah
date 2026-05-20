@@ -61,11 +61,6 @@ export default function GuestbookSection() {
             if (exists) return prev;
             return [payload.new, ...prev];
           });
-          
-          // Notifikasi visual untuk ucapan baru dari orang lain
-          if (payload.new.nama !== nama) {
-            toast.info(`Ucapan baru daripada ${payload.new.nama} ✨`);
-          }
         }
       )
       .subscribe();
@@ -93,7 +88,7 @@ export default function GuestbookSection() {
     }
 
     setIsLoading(true);
-    const { error } = await addMessage(nama, message);
+    const { error } = await addMessage(nama, message, relation);
     setIsLoading(false);
 
     if (error) {

@@ -34,7 +34,7 @@ export default function WeddingCard() {
   const contentRef = useRef(null);
 
   useEffect(() => {
-    document.title = "Walimatul Urus Shafika & Iman";
+    document.title = "Walimatul Urus Balkis Shafika & Mohamad Nor Iman";
   }, []);
 
   const handleOpenCard = () => {

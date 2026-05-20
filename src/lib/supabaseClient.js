@@ -9,14 +9,15 @@ export const supabase = createClient(supabaseUrl, supabaseKey)
  * Menambah ucapan baru ke dalam jadual 'guestbook'
  * @param {string} name - Nama pemberi ucapan
  * @param {string} message - Isi ucapan
+ * @param {string} relation - Hubungan tetamu
  * @returns {Promise<{data: any, error: any}>}
  */
-export const addMessage = async (name, message) => {
+export const addMessage = async (name, message, relation) => {
   try {
     const { data, error } = await supabase
       .from('guestbook')
       .insert([
-        { nama: name, message: message }
+        { nama: name, message: message, relation: relation }
       ])
       .select()
 

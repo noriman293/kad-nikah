@@ -1,4 +1,5 @@
-import { Home, UserCheck, MapPin, Heart } from 'lucide-react';
+import { Home, UserCheck, MapPin, Heart, Share2 } from 'lucide-react';
+import { toast } from 'sonner';
 
 const navItems = [
     { icon: Home, label: 'Utama', target: 'hero' },
@@ -10,6 +11,25 @@ const navItems = [
 export default function FloatingNav() {
     const scrollTo = (id) => {
         document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
+    };
+
+    const handleShare = async () => {
+        const shareData = {
+            title: 'Walimatul Urus Balkis Shafika & Mohamad Nor Iman',
+            text: 'Assalamualaikum WBT. Jemputan Walimatul Urus Balkis Shafika & Mohamad Nor Iman pada 19 Disember 2026. Sila klik link untuk maklumat lanjut:',
+            url: window.location.href,
+        };
+
+        try {
+            if (navigator.share) {
+                await navigator.share(shareData);
+            } else {
+                await navigator.clipboard.writeText(`${shareData.text}\n\n${shareData.url}`);
+                toast.success('Link & jemputan telah disalin!');
+            }
+        } catch (err) {
+            console.error('Error sharing:', err);
+        }
     };
 
     return (
@@ -27,6 +47,14 @@ export default function FloatingNav() {
                     </button>
                 );
             })}
+            <div className="w-px h-6 bg-foreground/10 mx-1" />
+            <button
+                onClick={handleShare}
+                className="flex flex-col items-center gap-0.5 px-3 py-1 rounded-full hover:bg-white/60 transition-all text-primary"
+            >
+                <Share2 className="w-4 h-4" />
+                <span className="text-[9px] font-sans font-medium">Kongsi</span>
+            </button>
         </nav>
     );
 }
