@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { supabase } from '@/lib/supabaseClient';
+import { supabase, addMessage } from '@/lib/supabaseClient';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Plus, Send, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -15,57 +14,57 @@ export default function GuestbookSection() {
   const [showForm, setShowForm] = useState(false);
   const [nama, setNama] = useState('');
   const [relation, setRelation] = useState('');
-  const [message, setMessage] = useState('');
-  const queryClient = useQueryClient();
+  const [messages, setMessages] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [isFetching, setIsFetching] = useState(false);
+  const [fetchError, setFetchError] = useState(null);
+  const [displayLimit, setDisplayLimit] = useState(5);
 
-  // ambil data dari Supabase
-  const { data: messages = [] } = useQuery({
-    queryKey: ['guestbook'],
-    queryFn: async () => {
+  // Ambil data dari Supabase
+  const fetchMessages = async () => {
+    setFetchError(null);
+    setIsFetching(true);
+    try {
       const { data, error } = await supabase
         .from('guestbook')
         .select('*')
         .order('created_at', { ascending: false });
-      if (error) throw error;
-      return data;
-    },
-  });
+      
+      if (error) {
+        console.error('Error fetching messages:', error.message);
+        setFetchError('Gagal mengambil ucapan tetamu.');
+        return;
+      }
+      setMessages(data || []);
+    } catch (err) {
+      console.error('Unexpected error fetching messages:', err);
+      setFetchError('Ralat tidak dijangka berlaku.');
+    } finally {
+      setIsFetching(false);
+    }
+  };
 
-  // tambah ucapan baru
-  const createMutation = useMutation({
-    mutationFn: async (data) => {
-      const { error } = await supabase.from('guestbook').insert([data]);
-      if (error) throw error;
-    },
-    onSuccess: () => {
-      // Kita tidak perlu invalidateQueries di sini kerana 
-      // listener realtime di bawah akan mengendalikan kemas kini cache
-      setShowForm(false);
-      setNama('');
-      setRelation('');
-      setMessage('');
-      // toast.success('Ucapan anda telah dihantar!'); // Pindahkan ke listener realtime untuk elakkan double toast
-    },
-  });
-
-  // realtime listener untuk ucapan baru
   useEffect(() => {
+    fetchMessages();
+
+    // Real-time subscription
     const channel = supabase
-      .channel('guestbook-realtime')
+      .channel('guestbook-changes')
       .on(
         'postgres_changes',
         { event: 'INSERT', schema: 'public', table: 'guestbook' },
         (payload) => {
-          // Update cache React Query secara manual
-          queryClient.setQueryData(['guestbook'], (old = []) => {
-            // Semak jika ID sudah wujud dalam cache untuk elakkan duplikasi
-            const exists = old.some(msg => msg.id === payload.new.id);
-            if (exists) return old;
-            return [payload.new, ...old];
+          setMessages((prev) => {
+            // Elakkan duplikasi jika user yang hantar sendiri
+            const exists = prev.some((m) => m.id === payload.new.id);
+            if (exists) return prev;
+            return [payload.new, ...prev];
           });
-
-          // Toast realtime (Hanya satu toast akan muncul di sini)
-          toast.success(`Ucapan baru dari ${payload.new.nama}: "${payload.new.message}"`);
+          
+          // Notifikasi visual untuk ucapan baru dari orang lain
+          if (payload.new.nama !== nama) {
+            toast.info(`Ucapan baru daripada ${payload.new.nama} ✨`);
+          }
         }
       )
       .subscribe();
@@ -73,17 +72,44 @@ export default function GuestbookSection() {
     return () => {
       supabase.removeChannel(channel);
     };
-  }, [queryClient]);
+  }, []);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!nama.trim() || !message.trim()) return;
-    createMutation.mutate({
-      nama,
-      relation,
-      message,
-    });
+    
+    // Validasi Input
+    if (!nama.trim()) {
+      toast.error('Sila masukkan nama anda 🌸');
+      return;
+    }
+    if (!message.trim()) {
+      toast.error('Sila tulis ucapan anda 💕');
+      return;
+    }
+    if (message.length > 300) {
+      toast.error('Ucapan terlalu panjang (maksimum 300 aksara)');
+      return;
+    }
+
+    setIsLoading(true);
+    const { error } = await addMessage(nama, message);
+    setIsLoading(false);
+
+    if (error) {
+      console.error('Error submitting message:', error);
+      toast.error('Gagal menghantar ucapan. Sila cuba lagi 🛠️');
+    } else {
+      toast.success('Terima kasih! Ucapan anda telah dihantar 💖');
+      setShowForm(false);
+      setNama('');
+      setRelation('');
+      setMessage('');
+      // fetchMessages() tidak wajib dipanggil lagi kerana Real-time akan handle update state
+    }
   };
+
+  const visibleMessages = messages.slice(0, displayLimit);
+  const hasMore = messages.length > displayLimit;
 
   return (
     <section className="relative py-20 md:py-28 px-4">
@@ -96,42 +122,87 @@ export default function GuestbookSection() {
         </AnimatedSection>
 
         {/* Messages */}
-        <div className="space-y-4 mt-8 max-h-96 overflow-y-auto pr-2">
-          <AnimatePresence>
-            {messages.map((msg) => (
-              <motion.div
-                key={msg.id}
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: 10 }}
-                transition={{ duration: 0.3 }}
+        <div className="space-y-4 mt-8 pr-2">
+          {isFetching && messages.length === 0 ? (
+            <div className="flex flex-col items-center justify-center py-10 space-y-2">
+              <div className="w-6 h-6 border-2 border-primary/30 border-t-primary rounded-full animate-spin" />
+              <p className="text-xs text-muted-foreground font-sans italic">Memuatkan memori indah...</p>
+            </div>
+          ) : fetchError ? (
+            <div className="text-center py-10">
+              <p className="text-sm text-destructive font-sans">{fetchError}</p>
+              <Button 
+                variant="ghost" 
+                size="sm" 
+                onClick={fetchMessages}
+                className="mt-2 text-xs text-primary hover:text-primary/80"
               >
-                <div className="bg-white/30 backdrop-blur-sm border border-white/30 rounded-2xl rounded-tl-sm p-4">
-                  <p className="font-sans text-sm text-foreground/90 leading-relaxed">{msg.message}</p>
-                  <div className="flex items-center gap-2 mt-2">
-                    <p className="font-serif text-xs font-medium text-primary">{msg.nama}</p>
-                    {msg.relation && (
-                      <span className="text-xs text-muted-foreground">· {msg.relation}</span>
-                    )}
-                    {/* Tarikh + masa ucapan */}
-                    <span className="text-xs text-muted-foreground">
-                      · {new Date(msg.created_at).toLocaleString('ms-MY', {
-                          day: 'numeric',
-                          month: 'short',
-                          year: 'numeric',
-                          hour: '2-digit',
-                          minute: '2-digit',
-                        })}
-                    </span>
-                  </div>
-                </div>
-              </motion.div>
-            ))}
-          </AnimatePresence>
-          {messages.length === 0 && (
-            <p className="text-center text-sm text-muted-foreground font-sans">
-              Jadilah yang pertama meninggalkan ucapan 💕
-            </p>
+                Cuba Lagi 🔄
+              </Button>
+            </div>
+          ) : (
+            <>
+              <AnimatePresence initial={false}>
+                {visibleMessages.map((msg) => (
+                  <motion.div
+                    key={msg.id}
+                    initial={{ opacity: 0, scale: 0.95 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    exit={{ opacity: 0, scale: 0.95 }}
+                    transition={{ duration: 0.4 }}
+                  >
+                    <div className="bg-white/40 backdrop-blur-md border border-white/40 rounded-2xl rounded-tl-sm p-5 shadow-sm hover:shadow-md transition-shadow">
+                      <p className="font-sans text-sm text-foreground/90 leading-relaxed break-words italic">
+                        "{msg.message}"
+                      </p>
+                      <div className="flex items-center justify-between mt-3 border-t border-primary/10 pt-2">
+                        <div className="flex items-center gap-2">
+                          <p className="font-serif text-xs font-semibold text-primary">{msg.nama}</p>
+                          {msg.relation && (
+                            <span className="text-[10px] px-2 py-0.5 rounded-full bg-primary/10 text-primary/70 font-sans">
+                              {msg.relation}
+                            </span>
+                          )}
+                        </div>
+                        <span className="text-[10px] text-muted-foreground font-sans">
+                          {new Date(msg.created_at).toLocaleString('ms-MY', {
+                              day: 'numeric',
+                              month: 'short',
+                              hour: '2-digit',
+                              minute: '2-digit',
+                            })}
+                        </span>
+                      </div>
+                    </div>
+                  </motion.div>
+                ))}
+              </AnimatePresence>
+
+              {hasMore && (
+                <motion.div 
+                  initial={{ opacity: 0 }} 
+                  animate={{ opacity: 1 }}
+                  className="text-center pt-4"
+                >
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    onClick={() => setDisplayLimit(prev => prev + 5)}
+                    className="text-xs text-muted-foreground hover:text-primary transition-colors"
+                  >
+                    Lihat Lebih Banyak Ucapan 🌸
+                  </Button>
+                </motion.div>
+              )}
+            </>
+          )}
+          
+          {!isFetching && messages.length === 0 && (
+            <div className="text-center py-10 bg-white/20 rounded-3xl border border-dashed border-primary/20">
+              <p className="text-sm text-muted-foreground font-sans italic">
+                Belum ada ucapan lagi. <br/>Jadilah yang pertama meninggalkan kata-kata manis 💕
+              </p>
+            </div>
           )}
         </div>
 
@@ -164,26 +235,34 @@ export default function GuestbookSection() {
                       value={nama}
                       onChange={(e) => setNama(e.target.value)}
                       className="bg-white/50 border-white/40 font-sans text-sm"
+                      maxLength={50}
                     />
                     <Input
                       placeholder="Hubungan (cth: Rakan sekerja)"
                       value={relation}
                       onChange={(e) => setRelation(e.target.value)}
                       className="bg-white/50 border-white/40 font-sans text-sm"
+                      maxLength={50}
                     />
-                    <Textarea
-                      placeholder="Tulis ucapan anda..."
-                      value={message}
-                      onChange={(e) => setMessage(e.target.value)}
-                      className="bg-white/50 border-white/40 font-sans text-sm h-20"
-                    />
+                    <div className="relative">
+                      <Textarea
+                        placeholder="Tulis ucapan anda..."
+                        value={message}
+                        onChange={(e) => setMessage(e.target.value)}
+                        className="bg-white/50 border-white/40 font-sans text-sm h-24"
+                        maxLength={300}
+                      />
+                      <span className={`absolute bottom-2 right-2 text-[10px] ${message.length >= 300 ? 'text-destructive' : 'text-muted-foreground'}`}>
+                        {message.length}/300
+                      </span>
+                    </div>
                     <Button
                       type="submit"
-                      disabled={createMutation.isPending}
+                      disabled={isLoading}
                       className="w-full bg-primary/80 hover:bg-primary font-serif"
                     >
                       <Send className="w-4 h-4 mr-2" />
-                      {createMutation.isPending ? 'Menghantar...' : 'Hantar'}
+                      {isLoading ? 'Menghantar...' : 'Hantar'}
                     </Button>
                   </form>
                 </GlassCard>

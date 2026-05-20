@@ -12,7 +12,8 @@ export default function HeroSection({ bgImage, onOpenCard }) {
                     backgroundImage: `url(${bgImage})`,
                     backgroundSize: 'cover',
                     backgroundPosition: 'center',
-                    filter: 'blur(8px)',
+                    backgroundAttachment: 'fixed',
+                    filter: 'blur(6px)',
                 }}
             />
             <div className="absolute inset-0 bg-gradient-to-b from-background/40 via-transparent to-background/60" />
@@ -22,8 +23,9 @@ export default function HeroSection({ bgImage, onOpenCard }) {
                 <motion.p
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 1, delay: 0.3 }}
-                    className="font-serif text-base md:text-lg tracking-widest uppercase text-muted-foreground mb-4"
+                    transition={{ duration: 1, delay: 0.3, ease: "easeOut" }}
+                    className="font-serif tracking-widest uppercase text-muted-foreground mb-4"
+                    style={{ fontSize: 'clamp(0.8rem, 2vw, 1.2rem)' }}
                 >
                     Walimatul Urus
                 </motion.p>
@@ -31,8 +33,9 @@ export default function HeroSection({ bgImage, onOpenCard }) {
                 <motion.h1
                     initial={{ opacity: 0, scale: 0.9 }}
                     animate={{ opacity: 1, scale: 1 }}
-                    transition={{ duration: 1.2, delay: 0.6 }}
-                    className="font-script text-5xl md:text-7xl lg:text-8xl text-foreground mb-2"
+                    transition={{ duration: 1.2, delay: 0.6, ease: "easeOut" }}
+                    className="font-script text-foreground mb-2"
+                    style={{ fontSize: 'clamp(3rem, 8vw, 8rem)' }}
                 >
                     Shafika & Iman
                 </motion.h1>
@@ -40,7 +43,7 @@ export default function HeroSection({ bgImage, onOpenCard }) {
                 <motion.div
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
-                    transition={{ duration: 1, delay: 1.0 }}
+                    transition={{ duration: 1, delay: 1.0, ease: "easeOut" }}
                 >
                     <GoldDivider />
                 </motion.div>
@@ -48,8 +51,9 @@ export default function HeroSection({ bgImage, onOpenCard }) {
                 <motion.p
                     initial={{ opacity: 0, y: 10 }}
                     animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.8, delay: 1.2 }}
-                    className="font-serif text-sm md:text-base text-muted-foreground tracking-wider mt-2"
+                    transition={{ duration: 0.8, delay: 1.2, ease: "easeOut" }}
+                    className="font-serif text-muted-foreground tracking-wider mt-2"
+                    style={{ fontSize: 'clamp(0.8rem, 2vw, 1.2rem)' }}
                 >
                     19 Disember 2026
                 </motion.p>
@@ -57,11 +61,16 @@ export default function HeroSection({ bgImage, onOpenCard }) {
                 <motion.button
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.8, delay: 1.6 }}
-                    whileHover={{ scale: 1.05, boxShadow: '0 0 20px rgba(197, 160, 89, 0.3)' }}
+                    transition={{ duration: 0.8, delay: 1.6, ease: "easeOut" }}
+                    whileHover={{ 
+                        scale: 1.05, 
+                        boxShadow: '0 0 20px rgba(197, 160, 89, 0.3)',
+                        transition: { type: "spring", stiffness: 400, damping: 10 }
+                    }}
                     whileTap={{ scale: 0.97 }}
                     onClick={onOpenCard}
-                    className="mt-8 px-10 py-3 rounded-full bg-white/50 backdrop-blur-sm border border-accent/30 font-serif text-sm md:text-base tracking-widest text-foreground hover:bg-white/70 transition-all"
+                    aria-label="Buka Kad Kahwin"
+                    className="mt-8 px-8 md:px-10 py-4 rounded-full bg-white/50 backdrop-blur-sm border border-accent/30 font-serif text-sm md:text-base tracking-widest text-foreground hover:bg-white/70 transition-all"
                 >
                     Buka Kad
                 </motion.button>
