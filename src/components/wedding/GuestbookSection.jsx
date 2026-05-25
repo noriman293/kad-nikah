@@ -10,16 +10,19 @@ import GlassCard from '@/components/wedding/GlassCard';
 import GoldDivider from '@/components/wedding/GoldDivider';
 import { toast } from 'sonner';
 
+const EMOJI_PRESETS = ['💐', '🎉', '❤️', '💍', '✨', '💌'];
+
 export default function GuestbookSection() {
   const [showForm, setShowForm] = useState(false);
   const [nama, setNama] = useState('');
   const [relation, setRelation] = useState('');
   const [message, setMessage] = useState('');
+  const [selectedEmoji, setSelectedEmoji] = useState('❤️');
   const [messages, setMessages] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [isFetching, setIsFetching] = useState(false);
   const [fetchError, setFetchError] = useState(null);
-  const [displayLimit, setDisplayLimit] = useState(5);
+  const [displayLimit, setDisplayLimit] = useState(6);
 
   // Ambil data dari Supabase
   const fetchMessages = async () => {
@@ -88,19 +91,22 @@ export default function GuestbookSection() {
     }
 
     setIsLoading(true);
-    const { error } = await addMessage(nama, message, relation);
-    setIsLoading(false);
+    try {
+      const { error } = await addMessage(nama, message, relation, selectedEmoji);
+      
+      if (error) throw error;
 
-    if (error) {
-      console.error('Error submitting message:', error);
-      toast.error('Gagal menghantar ucapan. Sila cuba lagi 🛠️');
-    } else {
       toast.success('Terima kasih! Ucapan anda telah dihantar 💖');
       setShowForm(false);
       setNama('');
       setRelation('');
       setMessage('');
-      // fetchMessages() tidak wajib dipanggil lagi kerana Real-time akan handle update state
+      setSelectedEmoji('❤️');
+    } catch (err) {
+      console.error('Error submitting message:', err);
+      toast.error('Gagal menghantar ucapan. Sila cuba lagi 🛠️');
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -109,7 +115,7 @@ export default function GuestbookSection() {
 
   return (
     <section className="relative py-20 md:py-28 px-4">
-      <div className="max-w-lg mx-auto">
+      <div className="max-w-4xl mx-auto">
         <AnimatedSection className="text-center">
           <p className="font-serif text-base md:text-lg tracking-widest uppercase text-muted-foreground">
             Ucapan Tetamu
@@ -118,7 +124,7 @@ export default function GuestbookSection() {
         </AnimatedSection>
 
         {/* Messages */}
-        <div className="space-y-4 mt-8 pr-2">
+        <div className="mt-8 pr-2">
           {isFetching && messages.length === 0 ? (
             <div className="flex flex-col items-center justify-center py-10 space-y-2">
               <div className="w-6 h-6 border-2 border-primary/30 border-t-primary rounded-full animate-spin" />
@@ -138,41 +144,49 @@ export default function GuestbookSection() {
             </div>
           ) : (
             <>
-              <AnimatePresence initial={false}>
-                {visibleMessages.map((msg) => (
-                  <motion.div
-                    key={msg.id}
-                    initial={{ opacity: 0, scale: 0.95 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    exit={{ opacity: 0, scale: 0.95 }}
-                    transition={{ duration: 0.4 }}
-                  >
-                    <div className="bg-white/40 backdrop-blur-md border border-white/40 rounded-2xl rounded-tl-sm p-5 shadow-sm hover:shadow-md transition-shadow">
-                      <p className="font-sans text-sm text-foreground/90 leading-relaxed break-words italic">
-                        "{msg.message}"
-                      </p>
-                      <div className="flex items-center justify-between mt-3 border-t border-primary/10 pt-2">
-                        <div className="flex items-center gap-2">
-                          <p className="font-serif text-xs font-semibold text-primary">{msg.nama}</p>
-                          {msg.relation && (
-                            <span className="text-[10px] px-2 py-0.5 rounded-full bg-primary/10 text-primary/70 font-sans">
-                              {msg.relation}
-                            </span>
-                          )}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <AnimatePresence initial={false}>
+                  {visibleMessages.map((msg) => (
+                    <motion.div
+                      key={msg.id}
+                      initial={{ opacity: 0, scale: 0.95 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      exit={{ opacity: 0, scale: 0.95 }}
+                      transition={{ duration: 0.4 }}
+                    >
+                      <div className="relative h-full bg-white/40 backdrop-blur-md border border-white/40 rounded-2xl rounded-tl-sm p-5 shadow-sm hover:shadow-md transition-shadow flex flex-col">
+                        <div className="pr-8">
+                          <p className="font-sans text-sm text-foreground/90 leading-relaxed break-words italic">
+                            "{msg.message}"
+                          </p>
                         </div>
-                        <span className="text-[10px] text-muted-foreground font-sans">
-                          {new Date(msg.created_at).toLocaleString('ms-MY', {
-                              day: 'numeric',
-                              month: 'short',
-                              hour: '2-digit',
-                              minute: '2-digit',
-                            })}
-                        </span>
+                        {msg.emoji && (
+                          <span className="text-2xl absolute top-2 right-2" title="Emoji pilihan">
+                            {msg.emoji}
+                          </span>
+                        )}
+
+                        <div className="flex items-center justify-between mt-auto border-t border-primary/10 pt-3">
+                          <div className="flex flex-col">
+                            <p className="font-serif text-xs font-semibold text-primary">{msg.nama}</p>
+                            {msg.relation && (
+                              <span className="text-[10px] text-primary/70 font-sans">
+                                {msg.relation}
+                              </span>
+                            )}
+                          </div>
+                          <span className="text-[10px] text-muted-foreground font-sans">
+                            {new Date(msg.created_at).toLocaleDateString('ms-MY', {
+                                day: 'numeric',
+                                month: 'short',
+                              })}
+                          </span>
+                        </div>
                       </div>
-                    </div>
-                  </motion.div>
-                ))}
-              </AnimatePresence>
+                    </motion.div>
+                  ))}
+                </AnimatePresence>
+              </div>
 
               {hasMore && (
                 <motion.div 
@@ -217,7 +231,12 @@ export default function GuestbookSection() {
                 </Button>
               </motion.div>
             ) : (
-              <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: 20 }}>
+              <motion.div 
+                initial={{ opacity: 0, y: 20 }} 
+                animate={{ opacity: 1, y: 0 }} 
+                exit={{ opacity: 0, y: 20 }}
+                className="max-w-lg mx-auto"
+              >
                 <GlassCard className="text-left">
                   <form onSubmit={handleSubmit} className="space-y-3">
                     <div className="flex justify-between items-center">
@@ -252,6 +271,28 @@ export default function GuestbookSection() {
                         {message.length}/300
                       </span>
                     </div>
+
+                    {/* Emoji Preset Selection */}
+                    <div className="space-y-2">
+                      <label className="text-[10px] uppercase tracking-wider text-muted-foreground font-medium">Pilih Emoji / Sticker</label>
+                      <div className="flex flex-wrap gap-2">
+                        {EMOJI_PRESETS.map((emoji) => (
+                          <button
+                            key={emoji}
+                            type="button"
+                            onClick={() => setSelectedEmoji(emoji)}
+                            className={`text-2xl p-2 rounded-xl transition-all ${
+                              selectedEmoji === emoji 
+                                ? 'bg-primary/20 border-2 border-primary/40 scale-110 shadow-sm' 
+                                : 'bg-white/30 border-2 border-transparent hover:bg-white/50'
+                            }`}
+                          >
+                            {emoji}
+                          </button>
+                        ))}
+                      </div>
+                    </div>
+
                     <Button
                       type="submit"
                       disabled={isLoading}

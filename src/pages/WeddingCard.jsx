@@ -91,7 +91,6 @@ export default function WeddingCard() {
               <MenuSection />
             </div>
 
-            <Footer />            {/* ✅ footer component */}
             <div className="h-20" /> {/* spacer */}
             <FloatingNav />
           </motion.div>

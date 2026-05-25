@@ -14,6 +14,8 @@ export default function CalendarSection() {
         `BEGIN:VCALENDAR\nVERSION:2.0\nBEGIN:VEVENT\nDTSTART:${startDate}\nDTEND:${endDate}\nSUMMARY:${eventTitle}\nLOCATION:${location}\nDESCRIPTION:Majlis Walimatul Urus Iman & Pika\nEND:VEVENT\nEND:VCALENDAR`
     )}`;
 
+    const outlookCalUrl = `https://outlook.live.com/calendar/0/deeplink/compose?subject=${encodeURIComponent(eventTitle)}&startdt=${startDate}&enddt=${endDate}&location=${encodeURIComponent(location)}&body=${encodeURIComponent('Majlis Walimatul Urus Iman & Pika')}`;
+
     return (
         <div>
             <AnimatedSection className="text-center">
@@ -26,11 +28,12 @@ export default function CalendarSection() {
             <AnimatedSection delay={0.2}>
                 <div className="mt-6 text-center">
                     <p className="font-serif text-sm text-foreground/80 mb-4">Sabtu, 19 Disember 2026</p>
-                    <div className="flex flex-col sm:flex-row gap-3 justify-center">
+                    <div className="flex flex-col sm:flex-row flex-wrap gap-3 justify-center">
                         <a
                             href={googleCalUrl}
                             target="_blank"
                             rel="noopener noreferrer"
+                            aria-label="Simpan tarikh ke Google Calendar"
                             className="flex items-center justify-center gap-2 px-5 py-2.5 rounded-full bg-white/40 backdrop-blur-sm border border-white/30 hover:bg-white/60 transition-all font-serif text-sm text-foreground"
                         >
                             <Calendar className="w-4 h-4 text-primary" />
@@ -39,10 +42,21 @@ export default function CalendarSection() {
                         <a
                             href={appleCalUrl}
                             download="iman-pika-wedding.ics"
+                            aria-label="Simpan tarikh ke Apple Calendar"
                             className="flex items-center justify-center gap-2 px-5 py-2.5 rounded-full bg-white/40 backdrop-blur-sm border border-white/30 hover:bg-white/60 transition-all font-serif text-sm text-foreground"
                         >
                             <Calendar className="w-4 h-4 text-primary" />
                             Apple Calendar
+                        </a>
+                        <a
+                            href={outlookCalUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            aria-label="Simpan tarikh ke Outlook Calendar"
+                            className="flex items-center justify-center gap-2 px-5 py-2.5 rounded-full bg-white/40 backdrop-blur-sm border border-white/30 hover:bg-white/60 transition-all font-serif text-sm text-foreground"
+                        >
+                            <Calendar className="w-4 h-4 text-primary" />
+                            Outlook Calendar
                         </a>
                     </div>
                 </div>

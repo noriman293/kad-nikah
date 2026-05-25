@@ -29,13 +29,15 @@ const AuthenticatedApp = () => {
   }
 
   return (
-    <>
-      <Routes>
-        <Route path="/" element={<WeddingCard />} />
-        <Route path="*" element={<PageNotFound />} />
-      </Routes>
+    <div className="min-h-screen flex flex-col">
+      <main className="flex-grow">
+        <Routes>
+          <Route path="/" element={<WeddingCard />} />
+          <Route path="*" element={<PageNotFound />} />
+        </Routes>
+      </main>
       <Footer />
-    </>
+    </div>
   );
 };
 

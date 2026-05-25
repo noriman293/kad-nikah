@@ -7,10 +7,10 @@ import LocationSection from '@/components/wedding/LocationSection';
 import CalendarSection from '@/components/wedding/CalendarSection';
 
 const tabs = [
-    { id: 'rsvp', icon: UserCheck, label: 'RSVP' },
-    { id: 'contact', icon: Phone, label: 'Hubungi' },
-    { id: 'location', icon: MapPin, label: 'Lokasi' },
-    { id: 'calendar', icon: Calendar, label: 'Tarikh' },
+    { id: 'rsvp', icon: UserCheck, label: 'RSVP', color: 'text-green-500' },
+    { id: 'contact', icon: Phone, label: 'Hubungi', color: 'text-blue-500' },
+    { id: 'location', icon: MapPin, label: 'Lokasi', color: 'text-red-500' },
+    { id: 'calendar', icon: Calendar, label: 'Tarikh', color: 'text-amber-500' },
 ];
 
 export default function MenuSection() {
@@ -28,13 +28,21 @@ export default function MenuSection() {
                             <button
                                 key={tab.id}
                                 onClick={() => setActiveTab(tab.id)}
-                                className={`flex items-center gap-1.5 px-3 py-2 rounded-full text-xs font-sans transition-all ${isActive
+                                aria-label={`Buka tab ${tab.label}`}
+                                className={`relative flex items-center gap-1.5 px-3 py-2 rounded-full text-xs font-sans transition-all ${isActive
                                         ? 'bg-primary/20 text-foreground border border-primary/30'
                                         : 'bg-white/30 text-muted-foreground border border-white/20 hover:bg-white/50'
                                     }`}
                             >
-                                <Icon className="w-3.5 h-3.5" />
+                                <Icon className={`w-3.5 h-3.5 ${tab.color}`} />
                                 {tab.label}
+                                {isActive && (
+                                    <motion.div
+                                        layoutId="activeTab"
+                                        className="absolute -bottom-1.5 left-1/2 -translate-x-1/2 w-4 h-1 bg-primary rounded-full"
+                                        transition={{ type: 'spring', stiffness: 500, damping: 30 }}
+                                    />
+                                )}
                             </button>
                         );
                     })}

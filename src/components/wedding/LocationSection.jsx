@@ -22,11 +22,26 @@ export default function LocationSection() {
                     <MapPin className="w-6 h-6 text-primary mx-auto mb-2" />
                     <p className="font-serif text-base text-foreground font-medium">{venue}</p>
 
+                    {/* Google Maps Embed */}
+                    <div className="mt-4 rounded-xl overflow-hidden border border-white/20 shadow-inner">
+                        <iframe
+                            width="100%"
+                            height="200"
+                            style={{ border: 0 }}
+                            loading="lazy"
+                            allowFullScreen
+                            referrerPolicy="no-referrer-when-downgrade"
+                            src={`https://www.google.com/maps?q=${encodeURIComponent(venue)}&output=embed`}
+                            title="Google Maps Location"
+                        />
+                    </div>
+
                     <div className="flex flex-col sm:flex-row gap-3 mt-5 justify-center">
                         <a
                             href={googleMapsUrl}
                             target="_blank"
                             rel="noopener noreferrer"
+                            aria-label="Buka lokasi di Google Maps"
                             className="flex items-center justify-center gap-2 px-5 py-2.5 rounded-full bg-white/40 border border-white/30 hover:bg-white/60 transition-all font-serif text-sm text-foreground"
                         >
                             <MapPin className="w-4 h-4 text-primary" />
@@ -36,6 +51,7 @@ export default function LocationSection() {
                             href={wazeUrl}
                             target="_blank"
                             rel="noopener noreferrer"
+                            aria-label="Buka lokasi di Waze"
                             className="flex items-center justify-center gap-2 px-5 py-2.5 rounded-full bg-white/40 border border-white/30 hover:bg-white/60 transition-all font-serif text-sm text-foreground"
                         >
                             <Navigation className="w-4 h-4 text-primary" />
