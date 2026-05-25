@@ -24,8 +24,8 @@ export default function HeroSection({ bgImage, onOpenCard }) {
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 1, delay: 0.3, ease: "easeOut" }}
-                    className="font-serif tracking-widest uppercase text-muted-foreground mb-4"
-                    style={{ fontSize: 'clamp(0.8rem, 2vw, 1.2rem)' }}
+                    className="font-serif tracking-widest uppercase text-foreground/80 mb-4"
+                    style={{ fontSize: 'clamp(1rem, 2.5vw, 1.4rem)' }}
                 >
                     Walimatul Urus
                 </motion.p>
@@ -34,8 +34,8 @@ export default function HeroSection({ bgImage, onOpenCard }) {
                     initial={{ opacity: 0, scale: 0.9 }}
                     animate={{ opacity: 1, scale: 1 }}
                     transition={{ duration: 1.2, delay: 0.6, ease: "easeOut" }}
-                    className="font-script text-foreground mb-2"
-                    style={{ fontSize: 'clamp(3rem, 8vw, 8rem)' }}
+                    className="font-script text-foreground mb-4"
+                    style={{ fontSize: 'clamp(4rem, 10vw, 9rem)' }}
                 >
                     Shafika & Iman
                 </motion.h1>
@@ -52,8 +52,8 @@ export default function HeroSection({ bgImage, onOpenCard }) {
                     initial={{ opacity: 0, y: 10 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.8, delay: 1.2, ease: "easeOut" }}
-                    className="font-serif text-muted-foreground tracking-wider mt-2"
-                    style={{ fontSize: 'clamp(0.8rem, 2vw, 1.2rem)' }}
+                    className="font-serif text-foreground tracking-wider mt-4 font-medium"
+                    style={{ fontSize: 'clamp(1.1rem, 3vw, 1.5rem)' }}
                 >
                     19 Disember 2026
                 </motion.p>

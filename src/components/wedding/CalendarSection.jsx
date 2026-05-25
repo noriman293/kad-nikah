@@ -19,7 +19,7 @@ export default function CalendarSection() {
     return (
         <div>
             <AnimatedSection className="text-center">
-                <p className="font-serif text-base md:text-lg tracking-widest uppercase text-muted-foreground">
+                <p className="font-serif text-lg md:text-xl tracking-widest uppercase text-foreground/80">
                     Simpan Tarikh
                 </p>
                 <GoldDivider />
@@ -27,25 +27,25 @@ export default function CalendarSection() {
 
             <AnimatedSection delay={0.2}>
                 <div className="mt-6 text-center">
-                    <p className="font-serif text-sm text-foreground/80 mb-4">Sabtu, 19 Disember 2026</p>
-                    <div className="flex flex-col sm:flex-row flex-wrap gap-3 justify-center">
+                    <p className="font-serif text-base md:text-lg text-foreground font-medium mb-6">Sabtu, 19 Disember 2026</p>
+                    <div className="flex flex-col sm:flex-row flex-wrap gap-4 justify-center px-4">
                         <a
                             href={googleCalUrl}
                             target="_blank"
                             rel="noopener noreferrer"
                             aria-label="Simpan tarikh ke Google Calendar"
-                            className="flex items-center justify-center gap-2 px-5 py-2.5 rounded-full bg-white/40 backdrop-blur-sm border border-white/30 hover:bg-white/60 transition-all font-serif text-sm text-foreground"
+                            className="flex items-center justify-center gap-3 px-6 py-3 rounded-full bg-white/50 backdrop-blur-sm border border-white/40 hover:bg-white/70 transition-all font-serif text-base text-foreground shadow-sm"
                         >
-                            <Calendar className="w-4 h-4 text-primary" />
+                            <Calendar className="w-5 h-5 text-primary" />
                             Google Calendar
                         </a>
                         <a
                             href={appleCalUrl}
                             download="iman-pika-wedding.ics"
                             aria-label="Simpan tarikh ke Apple Calendar"
-                            className="flex items-center justify-center gap-2 px-5 py-2.5 rounded-full bg-white/40 backdrop-blur-sm border border-white/30 hover:bg-white/60 transition-all font-serif text-sm text-foreground"
+                            className="flex items-center justify-center gap-3 px-6 py-3 rounded-full bg-white/50 backdrop-blur-sm border border-white/40 hover:bg-white/70 transition-all font-serif text-base text-foreground shadow-sm"
                         >
-                            <Calendar className="w-4 h-4 text-primary" />
+                            <Calendar className="w-5 h-5 text-primary" />
                             Apple Calendar
                         </a>
                         <a
@@ -53,9 +53,9 @@ export default function CalendarSection() {
                             target="_blank"
                             rel="noopener noreferrer"
                             aria-label="Simpan tarikh ke Outlook Calendar"
-                            className="flex items-center justify-center gap-2 px-5 py-2.5 rounded-full bg-white/40 backdrop-blur-sm border border-white/30 hover:bg-white/60 transition-all font-serif text-sm text-foreground"
+                            className="flex items-center justify-center gap-3 px-6 py-3 rounded-full bg-white/50 backdrop-blur-sm border border-white/40 hover:bg-white/70 transition-all font-serif text-base text-foreground shadow-sm"
                         >
-                            <Calendar className="w-4 h-4 text-primary" />
+                            <Calendar className="w-5 h-5 text-primary" />
                             Outlook Calendar
                         </a>
                     </div>

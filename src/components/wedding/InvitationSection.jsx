@@ -9,7 +9,7 @@ export default function InvitationSection() {
         <AnimatedSection>
           <GlassCard className="text-center">
             {/* Salam pembuka */}
-            <p className="font-serif text-sm md:text-base text-muted-foreground italic leading-relaxed">
+            <p className="font-serif text-base md:text-lg text-foreground/90 italic leading-relaxed">
               Assalamualaikum WBT & Salam Sejahtera
             </p>
 
@@ -17,16 +17,16 @@ export default function InvitationSection() {
 
             {/* Nama ibu & bapa */}
             <div className="mt-4">
-              <p className="font-serif text-base md:text-lg text-foreground font-medium">
+              <p className="font-serif text-lg md:text-xl text-foreground font-semibold">
                 Puan Sulaima binti Sulaimi
               </p>
-              <p className="font-script text-3xl md:text-4xl text-accent my-1">
+              <p className="font-script text-4xl md:text-5xl text-accent my-2">
                 &
               </p>
-              <p className="font-serif text-base md:text-lg text-foreground font-medium">
+              <p className="font-serif text-lg md:text-xl text-foreground font-semibold">
                 Muhammad Aidil Shafiq Bin Rusdi (Abang)
               </p>
-              <p className="font-serif text-sm md:text-base text-foreground/80 mt-2">
+              <p className="font-serif text-base md:text-lg text-foreground mt-3">
                 sekeluarga dengan penuh kesyukuran mempersilakan
               </p>
             </div>
@@ -34,8 +34,8 @@ export default function InvitationSection() {
             <GoldDivider className="my-6" />
 
             {/* Ayat jemputan */}
-            <p className="font-serif text-sm md:text-base text-foreground/80 leading-loose mt-4">
-              <span className="text-muted-foreground">
+            <p className="font-serif text-base md:text-lg text-foreground leading-loose mt-4">
+              <span className="text-foreground/70 font-medium">
                 Dato'/Datin/Dr./Tuan/Puan/Encik/Cik
               </span>
               <br />
@@ -43,7 +43,7 @@ export default function InvitationSection() {
             </p>
 
             {/* Nama pengantin */}
-            <h3 className="font-script text-3xl md:text-4xl text-foreground mt-6 mb-6">
+            <h3 className="font-script text-4xl md:text-5xl text-foreground mt-8 mb-8">
               Balkis Shafika
               <br />
               <span className="text-accent">&</span>
@@ -54,15 +54,15 @@ export default function InvitationSection() {
             <GoldDivider />
 
             {/* Maklumat majlis */}
-            <div className="space-y-2 mt-4">
-              <p className="font-serif text-sm md:text-base text-foreground/80">
-                <span className="text-primary font-medium">Tarikh:</span> Sabtu, 19 Disember 2026
+            <div className="space-y-3 mt-6">
+              <p className="font-serif text-base md:text-lg text-foreground">
+                <span className="text-primary font-bold">Tarikh:</span> Sabtu, 19 Disember 2026
               </p>
-              <p className="font-serif text-sm md:text-base text-foreground/80">
-                <span className="text-primary font-medium">Masa:</span> 12:00 tengah hari – 04:30 petang   
+              <p className="font-serif text-base md:text-lg text-foreground">
+                <span className="text-primary font-bold">Masa:</span> 12:00 tengah hari – 04:30 petang   
               </p>
-              <p className="font-serif text-sm md:text-base text-foreground/80">
-                <span className="text-primary font-medium">Tempat:</span> Lavender Event Space, Skudai
+              <p className="font-serif text-base md:text-lg text-foreground">
+                <span className="text-primary font-bold">Tempat:</span> Lavender Event Space, Skudai
               </p>
             </div>
           </GlassCard>
