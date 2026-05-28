@@ -21,6 +21,10 @@ const IMAGES = {
   flower2: 'https://media.base44.com/images/public/69d4a417a8942610f2bb96f1/6a3cddb5b_generated_d5df3c54.png',
   floralFrame: 'https://media.base44.com/images/public/69d4a417a8942610f2bb96f1/07b6b6dd1_generated_bf066ee2.png',
   gallery: [
+    '/image/photo1.jpg',
+    '/image/photo2.jpg',
+    '/image/photo3.jpg',
+    '/image/photo4.jpg',
     'https://media.base44.com/images/public/69d4a417a8942610f2bb96f1/715da5de1_generated_4ac81f2c.png',
     'https://media.base44.com/images/public/69d4a417a8942610f2bb96f1/8f983279e_generated_2da6e01e.png',
     'https://media.base44.com/images/public/69d4a417a8942610f2bb96f1/807001918_generated_c66ef058.png',
