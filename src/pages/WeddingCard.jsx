@@ -17,9 +17,10 @@ import Footer from '@/components/wedding/Footer'; // ✅ guna footer component
 
 const IMAGES = {
   heroBg: 'https://media.base44.com/images/public/69d4a417a8942610f2bb96f1/942dc2f75_generated_5e8897ad.png',
-  flower1: 'https://media.base44.com/images/public/69d4a417a8942610f2bb96f1/b400a034e_generated_9ff9a7ac.png',
-  flower2: 'https://media.base44.com/images/public/69d4a417a8942610f2bb96f1/6a3cddb5b_generated_d5df3c54.png',
+  flower1: 'dist/image/image1.png',
+  flower2: 'dist/image/image1.png',
   floralFrame: 'https://media.base44.com/images/public/69d4a417a8942610f2bb96f1/07b6b6dd1_generated_bf066ee2.png',
+  monogram: 'dist/image/photo1.png',
   gallery: [
     '/image/photo1.jpg',
     '/image/photo2.jpg',
@@ -79,7 +80,7 @@ export default function WeddingCard() {
             animate={{ opacity: 1 }}
             transition={{ duration: 0.8 }}
           >
-            <RevealSection />
+            <RevealSection monogramUrl={IMAGES.monogram} />
         
             <InvitationSection />
             <TimelineSection />

@@ -1,27 +1,24 @@
 import AnimatedSection from '@/components/wedding/AnimatedSection';
 import GoldDivider from '@/components/wedding/GoldDivider';
 
-export default function RevealSection() {
+export default function RevealSection({ monogramUrl }) {
   return (
     <section className="relative py-24 md:py-32 px-6 flex items-center justify-center">
       <div className="text-center max-w-lg mx-auto">
         <AnimatedSection>
-          <p className="font-serif text-base md:text-lg tracking-widest uppercase text-muted-foreground">
+          <p className="font-serif text-base md:text-lg tracking-widest uppercase text-muted-foreground mb-8">
             Walimatul Urus
           </p>
         </AnimatedSection>
 
-        {/* Monogram S atas, I bawah bercantum rapat */}
+        {/* Pure Image Insert of Monogram */}
         <AnimatedSection delay={0.2}>
-          <div className="relative inline-block leading-none">
-            {/* S */}
-            <span className="block font-serif text-[10rem] text-[#6b4e3d]">
-              S
-            </span>
-            {/* I ditolak ke atas supaya sentuh S */}
-            <span className="block font-serif text-[10rem] text-[#c5a059] -mt-[7.5rem]">
-              I
-            </span>
+          <div className="flex justify-center mb-12">
+            <img 
+              src={monogramUrl} 
+              alt="S+I Monogram" 
+              className="w-64 h-64 md:w-80 md:h-80 object-contain invert mix-blend-multiply opacity-80"
+            />
           </div>
         </AnimatedSection>
 

@@ -19,7 +19,7 @@ const Petal = ({ delay, startX, duration }) => (
         }}
     >
         <svg width="12" height="14" viewBox="0 0 12 14" fill="none">
-            <ellipse cx="6" cy="7" rx="5" ry="6.5" fill="hsl(348, 50%, 82%)" opacity="0.6" />
+            <ellipse cx="6" cy="7" rx="5" ry="6.5" fill="white" opacity="0.7" />
         </svg>
     </motion.div>
 );
