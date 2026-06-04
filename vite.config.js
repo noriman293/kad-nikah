@@ -9,7 +9,7 @@ export default defineConfig({
       '@': path.resolve(__dirname, './src'),
     },
   },
-  base: './',   // penting untuk Netlify
+  base: '/',   // untuk Vercel, guna root path
   build: {
     outDir: 'dist',
   },
