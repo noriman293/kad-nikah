@@ -1,6 +1,7 @@
-import { useState, useRef, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import FallingPetals from '@/components/wedding/FallingPetals';
+import FloatingButterflies from '@/components/wedding/FloatingButterflies';
 import FloatingFlowers from '@/components/wedding/FloatingFlowers';
 import MusicPlayer from '@/components/wedding/MusicPlayer';
 import HeroSection from '@/components/wedding/HeroSection';
@@ -13,14 +14,14 @@ import GuestbookSection from '@/components/wedding/GuestbookSection';
 import DoaSection from '@/components/wedding/DoaSection';
 import MenuSection from '@/components/wedding/MenuSection';
 import FloatingNav from '@/components/wedding/FloatingNav';
-import Footer from '@/components/wedding/Footer'; // ✅ guna footer component
+import Footer from '@/components/wedding/Footer';
 
 const IMAGES = {
   heroBg: 'https://media.base44.com/images/public/69d4a417a8942610f2bb96f1/942dc2f75_generated_5e8897ad.png',
   flower1: 'dist/image/photo4.png',
   flower2: 'dist/image/photo4.png',
   floralFrame: 'https://media.base44.com/images/public/69d4a417a8942610f2bb96f1/07b6b6dd1_generated_bf066ee2.png',
-  monogram: 'dist/image/photo5.png',
+  monogram: 'dist/image/photo5.png', 
   gallery: [
     '/image/photo1.jpg',
     '/image/photo2.jpg',
@@ -36,7 +37,7 @@ const IMAGES = {
 export default function WeddingCard() {
   const [isOpened, setIsOpened] = useState(false);
   const [musicPlaying, setMusicPlaying] = useState(false);
-  const contentRef = useRef(null);
+  const invitationRef = useRef(null);
 
   useEffect(() => {
     document.title = "Walimatul Urus Balkis Shafika & Mohamad Nor Iman";
@@ -45,25 +46,32 @@ export default function WeddingCard() {
   const handleOpenCard = () => {
     setIsOpened(true);
     setMusicPlaying(true);
-    setTimeout(() => {
-      contentRef.current?.scrollIntoView({ behavior: 'smooth' });
-    }, 300);
   };
+
+  // ✅ Auto scroll bila kad dibuka ke bahagian Walimatul Urus (RevealSection)
+  useEffect(() => {
+    if (isOpened) {
+      const timer = setTimeout(() => {
+        const element = document.getElementById('reveal');
+        if (element) {
+          element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      }, 500);
+      return () => clearTimeout(timer);
+    }
+  }, [isOpened]);
 
   return (
     <div className="relative min-h-screen bg-background overflow-x-hidden">
-      {/* Background gradient */}
       <div className="fixed inset-0 bg-gradient-to-b from-secondary via-background to-secondary pointer-events-none z-0" />
 
-      {/* Falling petals */}
       <FallingPetals />
-
-      {/* Floating flowers */}
+      <FloatingButterflies />
+      
       <div className="fixed inset-0 pointer-events-none">
         <FloatingFlowers flower1Url={IMAGES.flower1} flower2Url={IMAGES.flower2} />
       </div>
 
-      {/* Music player */}
       <MusicPlayer isPlaying={musicPlaying} setIsPlaying={setMusicPlaying} />
 
       {/* Hero */}
@@ -75,29 +83,36 @@ export default function WeddingCard() {
       <AnimatePresence>
         {isOpened && (
           <motion.div
-            ref={contentRef}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.8 }}
           >
-            <RevealSection monogramUrl={IMAGES.monogram} />
-        
+            <div id="reveal">
+              <RevealSection monogramUrl={IMAGES.monogram} />
+            </div>
             <InvitationSection />
             <TimelineSection />
             <CountdownSection />
-            <GallerySection photos={IMAGES.gallery} />
-            <GuestbookSection />
-
+            
+            <div id="gallery">
+              <GallerySection photos={IMAGES.gallery} />
+            </div>
+            
+            <div id="guestbook">
+              <GuestbookSection />
+            </div>
+            
             <div id="doa">
               <DoaSection floralFrameUrl={IMAGES.floralFrame} />
             </div>
-
+            
             <div id="menu">
               <MenuSection />
             </div>
-
+            
             <div className="h-20" /> {/* spacer */}
             <FloatingNav />
+            <Footer />
           </motion.div>
         )}
       </AnimatePresence>

@@ -4,8 +4,8 @@ import GoldDivider from '@/components/wedding/GoldDivider';
 
 export default function InvitationSection() {
   return (
-    <section className="relative py-20 md:py-28 px-4">
-      <div id="invitation-card" className="max-w-xl mx-auto">
+    <section id="invitation" className="relative py-20 md:py-28 px-4">
+      <div className="max-w-xl mx-auto">
         <AnimatedSection>
           <GlassCard className="text-center">
             {/* Salam pembuka */}
@@ -18,13 +18,13 @@ export default function InvitationSection() {
             {/* Nama ibu & bapa */}
             <div className="mt-4">
               <p className="font-serif text-lg md:text-xl text-foreground font-semibold">
-                Puan Sulaima binti Sulaimi
+                (Almarhum) Rusdi Bin Mohamad
               </p>
               <p className="font-script text-4xl md:text-5xl text-accent my-2">
                 &
               </p>
               <p className="font-serif text-lg md:text-xl text-foreground font-semibold">
-                Muhammad Aidil Shafiq Bin Rusdi (Abang)
+                Puan Sulaima binti Sulaimi
               </p>
               <p className="font-serif text-base md:text-lg text-foreground mt-3">
                 sekeluarga dengan penuh kesyukuran mempersilakan

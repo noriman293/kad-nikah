@@ -15,7 +15,25 @@ export default function FloatingNav() {
 
   const scrollTo = (id) => {
     setActiveSection(id);
-    document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
+    const element = document.getElementById(id);
+    if (element) {
+      // Jika id adalah 'hero', scroll ke paling atas
+      if (id === 'hero') {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      } else {
+        element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    } else {
+        // Jika element tidak dijumpai (mungkin dalam AnimatePresence), cuba lagi sekejap
+        setTimeout(() => {
+            const el = document.getElementById(id);
+            if (id === 'hero') {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            } else if (el) {
+                el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+        }, 100);
+    }
   };
 
   const handleShare = async () => {
