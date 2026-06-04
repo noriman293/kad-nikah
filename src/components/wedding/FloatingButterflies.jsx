@@ -2,8 +2,8 @@ import { motion } from 'framer-motion';
 import { useEffect, useState } from 'react';
 import Butterfly from './Butterfly';
 
-export default function FloatingButterflies({ count = 20 }) {
-  const [butterflies, setButterflies] = useState([10]);
+export default function FloatingButterflies({ count = 8 }) {
+  const [butterflies, setButterflies] = useState([8]);
   const colors = ['#fbcfe8', '#fce7f3', '#ddd6fe', '#e0e7ff', '#fae8ff', '#fef3c7'];
 
   useEffect(() => {

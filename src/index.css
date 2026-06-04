@@ -107,3 +107,8 @@ html {
   background: hsl(348 25% 80%);
   border-radius: 10px;
 }
+
+.will-change-transform {
+  will-change: transform;
+}
+
