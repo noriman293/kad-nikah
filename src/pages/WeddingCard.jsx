@@ -16,10 +16,11 @@ import MenuSection from '@/components/wedding/MenuSection';
 import FloatingNav from '@/components/wedding/FloatingNav';
 import Footer from '@/components/wedding/Footer';
 
+
 const IMAGES = {
   heroBg: 'https://media.base44.com/images/public/69d4a417a8942610f2bb96f1/942dc2f75_generated_5e8897ad.png',
-  flower1: '/image/flower1.png',
-  flower2: '/image/flower1.png',
+  flower1: '/image/sakura.svg',
+  flower2: '/image/sakura.svg',
   floralFrame: 'https://media.base44.com/images/public/69d4a417a8942610f2bb96f1/07b6b6dd1_generated_bf066ee2.png',
   monogram: '/image/mono.png', 
   gallery: [
@@ -27,10 +28,9 @@ const IMAGES = {
     '/image/photo2.jpg',
     '/image/photo3.jpg',
     '/image/photo4.jpg',
-    'https://media.base44.com/images/public/69d4a417a8942610f2bb96f1/715da5de1_generated_4ac81f2c.png',
-    'https://media.base44.com/images/public/69d4a417a8942610f2bb96f1/8f983279e_generated_2da6e01e.png',
-    'https://media.base44.com/images/public/69d4a417a8942610f2bb96f1/807001918_generated_c66ef058.png',
-    'https://media.base44.com/images/public/69d4a417a8942610f2bb96f1/0117f4991_generated_151ffff7.png',
+    '/image/photo5.jpg',  
+    '/image/photo6.jpg',      
+    '/image/photo7.jpg',
   ],
 };
 
