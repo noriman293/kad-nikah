@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 const Butterfly = ({ id, delay, startX, duration, size, color }) => {
     return (
         <motion.div
-            className="fixed pointer-events-none z-[5]"
+            className="fixed pointer-events-none z-[999]"
             initial={{ 
                 x: startX, 
                 y: '110vh', 
@@ -67,7 +67,7 @@ export default function FloatingButterflies() {
     }, []);
 
     return (
-        <div className="fixed inset-0 pointer-events-none z-[5] overflow-hidden">
+        <div className="fixed inset-0 pointer-events-none z-[999] overflow-hidden">
             {butterflies.map((b) => (
                 <Butterfly key={b.id} {...b} />
             ))}

@@ -18,10 +18,10 @@ import Footer from '@/components/wedding/Footer';
 
 const IMAGES = {
   heroBg: 'https://media.base44.com/images/public/69d4a417a8942610f2bb96f1/942dc2f75_generated_5e8897ad.png',
-  flower1: 'dist/image/photo4.png',
-  flower2: 'dist/image/photo4.png',
+  flower1: 'public/image/flower1.png',
+  flower2: 'public/image/flower1.png',
   floralFrame: 'https://media.base44.com/images/public/69d4a417a8942610f2bb96f1/07b6b6dd1_generated_bf066ee2.png',
-  monogram: 'dist/image/photo5.png', 
+  monogram: 'public/image/mono.png', 
   gallery: [
     '/image/photo1.jpg',
     '/image/photo2.jpg',
