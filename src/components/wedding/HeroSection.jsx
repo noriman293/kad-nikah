@@ -3,7 +3,7 @@ import GoldDivider from '@/components/wedding/GoldDivider';
 
 export default function HeroSection({ bgImage, onOpenCard }) {
     return (
-        <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
+        <section className="relative h-screen flex items-center justify-center overflow-hidden">
             {/* Background layers */}
             <div className="absolute inset-0 bg-gradient-to-b from-secondary via-background to-secondary" />
             <div
@@ -12,7 +12,7 @@ export default function HeroSection({ bgImage, onOpenCard }) {
                     backgroundImage: `url(${bgImage})`,
                     backgroundSize: 'cover',
                     backgroundPosition: 'center',
-                    backgroundAttachment: 'fixed',
+                    backgroundAttachment: 'scroll',
                     filter: 'blur(6px)',
                 }}
             />
