@@ -24,9 +24,7 @@ const IMAGES = {
   floralFrame: 'https://media.base44.com/images/public/69d4a417a8942610f2bb96f1/07b6b6dd1_generated_bf066ee2.png',
   monogram: '/image/mono.png', 
   gallery: [
-    '/image/photo5.jpg',  
-    '/image/photo6.jpg',      
-    '/image/photo7.jpg',
+    '/image/photo1.jpg',  
   ],
 };
 
