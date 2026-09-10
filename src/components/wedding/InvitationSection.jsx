@@ -59,7 +59,7 @@ export default function InvitationSection() {
                 <span className="text-primary font-bold">Tarikh:</span> Ahad, 6 Disember 2026
               </p>
               <p className="font-serif text-base md:text-lg text-foreground">
-                <span className="text-primary font-bold">Masa:</span> 12:00 tengah hari – 04:30 petang   
+                <span className="text-primary font-bold">Masa:</span> 12:00 tengah hari – 04:00 petang   
               </p>
               <p className="font-serif text-base md:text-lg text-foreground">
                 <span className="text-primary font-bold">Tempat:</span> Difza Event Hall 2

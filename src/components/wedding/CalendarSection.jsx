@@ -5,7 +5,7 @@ import GoldDivider from '@/components/wedding/GoldDivider';
 export default function CalendarSection() {
     const eventTitle = 'Walimatul Urus - Iman & Pika';
     const location = 'Difza Event Hall 2';
-    const startDate = '20261206T030000Z'; // 11:00 AM MYT = 3:00 AM UTC
+    const startDate = '20261206T040000Z'; // 12:00 PM MYT = 4:00 AM UTC
     const endDate = '20261206T080000Z';   // 4:00 PM MYT = 8:00 AM UTC
 
     const googleCalUrl = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(eventTitle)}&dates=${startDate}/${endDate}&location=${encodeURIComponent(location)}&details=${encodeURIComponent('Majlis Walimatul Urus Iman & Pika')}`;
