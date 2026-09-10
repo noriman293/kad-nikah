@@ -5,7 +5,7 @@ const events = [
     { time: '12:00 tengah hari', label: 'Majlis Resepsi Bermula' },
     { time: '12:30 tengah hari', label: 'Ketibaan Pengantin' },
     { time: '3:00 petang', label: 'Sesi Santai & Bergambar' },
-    { time: '4:00 petang', label: 'MAJLIS BERSURAI' },
+    { time: '4:00 petang', label: 'Majlis Bersurai' },
 ];
 
 export default function TimelineSection() {
