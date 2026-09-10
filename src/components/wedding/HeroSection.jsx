@@ -55,7 +55,7 @@ export default function HeroSection({ bgImage, onOpenCard }) {
                     className="font-serif text-foreground tracking-wider mt-4 font-medium"
                     style={{ fontSize: 'clamp(1.1rem, 3vw, 1.5rem)' }}
                 >
-                    19 Disember 2026
+                    6 Disember 2026
                 </motion.p>
 
                 <motion.button

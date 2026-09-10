@@ -56,13 +56,13 @@ export default function InvitationSection() {
             {/* Maklumat majlis */}
             <div className="space-y-3 mt-6">
               <p className="font-serif text-base md:text-lg text-foreground">
-                <span className="text-primary font-bold">Tarikh:</span> Sabtu, 19 Disember 2026
+                <span className="text-primary font-bold">Tarikh:</span> Ahad, 6 Disember 2026
               </p>
               <p className="font-serif text-base md:text-lg text-foreground">
                 <span className="text-primary font-bold">Masa:</span> 12:00 tengah hari – 04:30 petang   
               </p>
               <p className="font-serif text-base md:text-lg text-foreground">
-                <span className="text-primary font-bold">Tempat:</span> Lavender Event Space, Skudai
+                <span className="text-primary font-bold">Tempat:</span> Difza Event Hall 2
               </p>
             </div>
           </GlassCard>

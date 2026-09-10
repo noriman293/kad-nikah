@@ -36,7 +36,7 @@ export default function WeddingCard() {
   const invitationRef = useRef(null);
 
   useEffect(() => {
-    document.title = "Walimatul Urus Balkis Shafika & Mohamad Nor Iman";
+    document.title = "Walimatul Urus Balkis Shafika & Mohamad Nor Iman - 6 Disember 2026";
   }, []);
 
   const handleOpenCard = () => {

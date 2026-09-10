@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 import AnimatedSection from '@/components/wedding/AnimatedSection';
 import GoldDivider from '@/components/wedding/GoldDivider';
 
-const WEDDING_DATE = new Date('2026-12-19T11:00:00+08:00');
+const WEDDING_DATE = new Date('2026-12-06T11:00:00+08:00');
 
 function CountdownUnit({ value, label }) {
     return (

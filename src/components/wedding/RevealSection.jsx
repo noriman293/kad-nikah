@@ -35,13 +35,13 @@ export default function RevealSection({ monogramUrl }) {
 
         <AnimatedSection delay={0.6}>
           <p className="font-serif text-base md:text-lg text-muted-foreground tracking-wide">
-            Sabtu, 19 Disember 2026
+            Ahad, 6 Disember 2026
           </p>
         </AnimatedSection>
 
         <AnimatedSection delay={0.7}>
           <p className="font-sans text-sm text-muted-foreground mt-2">
-            Lavender Event Space, Skudai
+            Difza Event Hall 2
           </p>
         </AnimatedSection>
       </div>

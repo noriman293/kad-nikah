@@ -4,7 +4,7 @@ import GlassCard from '@/components/wedding/GlassCard';
 import GoldDivider from '@/components/wedding/GoldDivider';
 
 export default function LocationSection() {
-    const venue = 'Lavender Event Space, Skudai';
+    const venue = 'Difza Event Hall 2';
     const googleMapsUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(venue)}`;
     const wazeUrl = `https://waze.com/ul?q=${encodeURIComponent(venue)}`;
 

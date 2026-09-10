@@ -39,7 +39,7 @@ export default function FloatingNav() {
   const handleShare = async () => {
     const shareData = {
       title: 'Walimatul Urus Balkis Shafika & Mohamad Nor Iman',
-      text: 'Assalamualaikum WBT. Jemputan Walimatul Urus Balkis Shafika & Mohamad Nor Iman pada 19 Disember 2026. Sila klik link untuk maklumat lanjut:',
+      text: 'Assalamualaikum WBT. Jemputan Walimatul Urus Balkis Shafika & Mohamad Nor Iman pada 6 Disember 2026. Sila klik link untuk maklumat lanjut:',
       url: window.location.href,
     };
 

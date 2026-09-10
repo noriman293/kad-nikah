@@ -4,9 +4,9 @@ import GoldDivider from '@/components/wedding/GoldDivider';
 
 export default function CalendarSection() {
     const eventTitle = 'Walimatul Urus - Iman & Pika';
-    const location = 'Lavender Event Space, Skudai';
-    const startDate = '20261219T030000Z'; // 11:00 AM MYT = 3:00 AM UTC
-    const endDate = '20261219T080000Z';   // 4:00 PM MYT = 8:00 AM UTC
+    const location = 'Difza Event Hall 2';
+    const startDate = '20261206T030000Z'; // 11:00 AM MYT = 3:00 AM UTC
+    const endDate = '20261206T080000Z';   // 4:00 PM MYT = 8:00 AM UTC
 
     const googleCalUrl = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(eventTitle)}&dates=${startDate}/${endDate}&location=${encodeURIComponent(location)}&details=${encodeURIComponent('Majlis Walimatul Urus Iman & Pika')}`;
 
@@ -27,7 +27,7 @@ export default function CalendarSection() {
 
             <AnimatedSection delay={0.2}>
                 <div className="mt-6 text-center">
-                    <p className="font-serif text-base md:text-lg text-foreground font-medium mb-6">Sabtu, 19 Disember 2026</p>
+                    <p className="font-serif text-base md:text-lg text-foreground font-medium mb-6">Ahad, 6 Disember 2026</p>
                     <div className="flex flex-col sm:flex-row flex-wrap gap-4 justify-center px-4">
                         <a
                             href={googleCalUrl}

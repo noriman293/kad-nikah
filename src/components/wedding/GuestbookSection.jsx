@@ -12,6 +12,56 @@ import { toast } from 'sonner';
 
 const EMOJI_PRESETS = ['💐', '🎉', '❤️', '💍', '✨', '💌'];
 
+const GuestbookMessage = ({ msg }) => {
+  const [isExpanded, setIsOpened] = useState(false);
+  const maxLength = 120;
+  const isLong = msg.message.length > maxLength;
+  
+  const displayMessage = isLong && !isExpanded 
+    ? `${msg.message.substring(0, maxLength)}...` 
+    : msg.message;
+
+  return (
+    <div className="relative h-full bg-white/40 backdrop-blur-md border border-white/40 rounded-2xl rounded-tl-sm p-5 shadow-sm hover:shadow-md transition-shadow flex flex-col">
+      <div className="pr-8">
+        <p className="font-sans text-sm text-foreground/90 leading-relaxed break-words italic">
+          "{displayMessage}"
+        </p>
+        {isLong && (
+          <button 
+            onClick={() => setIsOpened(!isExpanded)}
+            className="text-[10px] text-primary font-medium mt-1 hover:underline underline-offset-2"
+          >
+            {isExpanded ? 'Tutup' : 'Baca Selanjutnya'}
+          </button>
+        )}
+      </div>
+      {msg.emoji && (
+        <span className="text-2xl absolute top-2 right-2 select-none" title="Emoji pilihan">
+          {msg.emoji}
+        </span>
+      )}
+
+      <div className="flex items-center justify-between mt-auto border-t border-primary/10 pt-3">
+        <div className="flex flex-col">
+          <p className="font-serif text-xs font-semibold text-primary">{msg.nama}</p>
+          {msg.relation && (
+            <span className="text-[10px] text-primary/70 font-sans">
+              {msg.relation}
+            </span>
+          )}
+        </div>
+        <span className="text-[10px] text-muted-foreground font-sans">
+          {new Date(msg.created_at).toLocaleDateString('ms-MY', {
+              day: 'numeric',
+              month: 'short',
+            })}
+        </span>
+      </div>
+    </div>
+  );
+};
+
 export default function GuestbookSection() {
   const [showForm, setShowForm] = useState(false);
   const [nama, setNama] = useState('');
@@ -31,7 +81,7 @@ export default function GuestbookSection() {
     try {
       const { data, error } = await supabase
         .from('guestbook')
-        .select('*')
+        .select('id, nama, message, relation, emoji, created_at')
         .order('created_at', { ascending: false });
       
       if (error) {
@@ -154,35 +204,7 @@ export default function GuestbookSection() {
                       exit={{ opacity: 0, scale: 0.95 }}
                       transition={{ duration: 0.4 }}
                     >
-                      <div className="relative h-full bg-white/40 backdrop-blur-md border border-white/40 rounded-2xl rounded-tl-sm p-5 shadow-sm hover:shadow-md transition-shadow flex flex-col">
-                        <div className="pr-8">
-                          <p className="font-sans text-sm text-foreground/90 leading-relaxed break-words italic">
-                            "{msg.message}"
-                          </p>
-                        </div>
-                        {msg.emoji && (
-                          <span className="text-2xl absolute top-2 right-2" title="Emoji pilihan">
-                            {msg.emoji}
-                          </span>
-                        )}
-
-                        <div className="flex items-center justify-between mt-auto border-t border-primary/10 pt-3">
-                          <div className="flex flex-col">
-                            <p className="font-serif text-xs font-semibold text-primary">{msg.nama}</p>
-                            {msg.relation && (
-                              <span className="text-[10px] text-primary/70 font-sans">
-                                {msg.relation}
-                              </span>
-                            )}
-                          </div>
-                          <span className="text-[10px] text-muted-foreground font-sans">
-                            {new Date(msg.created_at).toLocaleDateString('ms-MY', {
-                                day: 'numeric',
-                                month: 'short',
-                              })}
-                          </span>
-                        </div>
-                      </div>
+                      <GuestbookMessage msg={msg} />
                     </motion.div>
                   ))}
                 </AnimatePresence>
