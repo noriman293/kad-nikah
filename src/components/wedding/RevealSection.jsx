@@ -47,7 +47,7 @@ export default function RevealSection({ monogramUrl }) {
 
         <AnimatedSection delay={0.8}>
           <div className="mt-8">
-            <p className="font-sans font-bold text-lg md:text-xl text-foreground tracking-tight">
+            <p className="font-script text-2xl md:text-3xl text-foreground">
               #ImaNeedShafika
             </p>
           </div>
