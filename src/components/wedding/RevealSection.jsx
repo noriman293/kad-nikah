@@ -46,9 +46,9 @@ export default function RevealSection({ monogramUrl }) {
         </AnimatedSection>
 
         <AnimatedSection delay={0.8}>
-          <div className="mt-8 inline-block px-6 py-2 bg-white rounded-full shadow-sm border border-accent/10">
+          <div className="mt-8">
             <p className="font-sans font-bold text-lg md:text-xl text-foreground tracking-tight">
-              #imaNeedShafika
+              #ImaNeedShafika
             </p>
           </div>
         </AnimatedSection>
