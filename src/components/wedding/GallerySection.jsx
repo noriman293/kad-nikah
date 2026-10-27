@@ -41,30 +41,36 @@ export default function GallerySection({ photos }) {
                         </div>
 
                         {/* Navigation */}
-                        <button
-                            onClick={prev}
-                            className="absolute left-3 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full bg-white/40 backdrop-blur-sm flex items-center justify-center hover:bg-white/60 transition-all"
-                        >
-                            <ChevronLeft className="w-4 h-4 text-foreground" />
-                        </button>
-                        <button
-                            onClick={next}
-                            className="absolute right-3 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full bg-white/40 backdrop-blur-sm flex items-center justify-center hover:bg-white/60 transition-all"
-                        >
-                            <ChevronRight className="w-4 h-4 text-foreground" />
-                        </button>
+                        {photos.length > 1 && (
+                            <>
+                                <button
+                                    onClick={prev}
+                                    className="absolute left-3 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full bg-white/40 backdrop-blur-sm flex items-center justify-center hover:bg-white/60 transition-all"
+                                >
+                                    <ChevronLeft className="w-4 h-4 text-foreground" />
+                                </button>
+                                <button
+                                    onClick={next}
+                                    className="absolute right-3 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full bg-white/40 backdrop-blur-sm flex items-center justify-center hover:bg-white/60 transition-all"
+                                >
+                                    <ChevronRight className="w-4 h-4 text-foreground" />
+                                </button>
+                            </>
+                        )}
 
                         {/* Dots */}
-                        <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2">
-                            {photos.map((_, i) => (
-                                <button
-                                    key={i}
-                                    onClick={() => setCurrent(i)}
-                                    className={`w-2 h-2 rounded-full transition-all ${i === current ? 'bg-white w-6' : 'bg-white/50'
-                                        }`}
-                                />
-                            ))}
-                        </div>
+                        {photos.length > 1 && (
+                            <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2">
+                                {photos.map((_, i) => (
+                                    <button
+                                        key={i}
+                                        onClick={() => setCurrent(i)}
+                                        className={`w-2 h-2 rounded-full transition-all ${i === current ? 'bg-white w-6' : 'bg-white/50'
+                                            }`}
+                                    />
+                                ))}
+                            </div>
+                        )}
                     </div>
                 </AnimatedSection>
             </div>
