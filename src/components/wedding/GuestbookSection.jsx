@@ -66,6 +66,7 @@ export default function GuestbookSection() {
   const [showForm, setShowForm] = useState(false);
   const [nama, setNama] = useState('');
   const [relation, setRelation] = useState('');
+  const [phone, setPhone] = useState('');
   const [message, setMessage] = useState('');
   const [selectedEmoji, setSelectedEmoji] = useState('❤️');
   const [messages, setMessages] = useState([]);
@@ -131,6 +132,14 @@ export default function GuestbookSection() {
       toast.error('Sila masukkan nama anda 🌸');
       return;
     }
+    if (!relation.trim()) {
+      toast.error('Sila nyatakan hubungan anda (cth: Kawan, Saudara) 🌸');
+      return;
+    }
+    if (!phone.trim()) {
+      toast.error('Sila masukkan nombor telefon anda 🌸');
+      return;
+    }
     if (!message.trim()) {
       toast.error('Sila tulis ucapan anda 💕');
       return;
@@ -142,7 +151,7 @@ export default function GuestbookSection() {
 
     setIsLoading(true);
     try {
-      const { error } = await addMessage(nama, message, relation, selectedEmoji);
+      const { error } = await addMessage(nama, message, relation, phone, selectedEmoji);
       
       if (error) throw error;
 
@@ -150,6 +159,7 @@ export default function GuestbookSection() {
       setShowForm(false);
       setNama('');
       setRelation('');
+      setPhone('');
       setMessage('');
       setSelectedEmoji('❤️');
     } catch (err) {
@@ -268,26 +278,38 @@ export default function GuestbookSection() {
                       </button>
                     </div>
                     <Input
-                      placeholder="Nama anda"
+                      placeholder="Nama anda *"
                       value={nama}
                       onChange={(e) => setNama(e.target.value)}
                       className="bg-white/50 border-white/40 font-sans text-sm"
                       maxLength={50}
+                      required
                     />
                     <Input
-                      placeholder="Hubungan (cth: Rakan sekerja)"
+                      placeholder="Hubungan (cth: Rakan sekerja) *"
                       value={relation}
                       onChange={(e) => setRelation(e.target.value)}
                       className="bg-white/50 border-white/40 font-sans text-sm"
                       maxLength={50}
+                      required
+                    />
+                    <Input
+                      placeholder="Nombor telefon *"
+                      type="tel"
+                      value={phone}
+                      onChange={(e) => setPhone(e.target.value)}
+                      className="bg-white/50 border-white/40 font-sans text-sm"
+                      maxLength={20}
+                      required
                     />
                     <div className="relative">
                       <Textarea
-                        placeholder="Tulis ucapan anda..."
+                        placeholder="Tulis ucapan anda... *"
                         value={message}
                         onChange={(e) => setMessage(e.target.value)}
                         className="bg-white/50 border-white/40 font-sans text-sm h-24"
                         maxLength={300}
+                        required
                       />
                       <span className={`absolute bottom-2 right-2 text-[10px] ${message.length >= 300 ? 'text-destructive' : 'text-muted-foreground'}`}>
                         {message.length}/300
