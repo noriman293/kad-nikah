@@ -10,16 +10,15 @@ export const supabase = createClient(supabaseUrl, supabaseKey)
  * @param {string} name - Nama pemberi ucapan
  * @param {string} message - Isi ucapan
  * @param {string} relation - Hubungan tetamu
- * @param {string} phone - Nombor telefon tetamu
  * @param {string} emoji - Emoji pilihan (pilihan)
  * @returns {Promise<{data: any, error: any}>}
  */
-export const addMessage = async (name, message, relation, phone, emoji = null) => {
+export const addMessage = async (name, message, relation, emoji = null) => {
   try {
     const { data, error } = await supabase
       .from('guestbook')
       .insert([
-        { nama: name, message: message, relation: relation, phone: phone, emoji: emoji }
+        { nama: name, message: message, relation: relation, emoji: emoji }
       ])
       .select()
 
