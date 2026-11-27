@@ -29,12 +29,28 @@ export default function RSVPForm() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (!attendance || !nama.trim()) return;
+    if (!attendance) {
+      toast.error('Sila pilih kehadiran anda 🌸');
+      return;
+    }
+    if (!nama.trim()) {
+      toast.error('Sila masukkan nama anda 🌸');
+      return;
+    }
+    const phoneDigits = phone.replace(/\D/g, '');
+    if (phoneDigits.length < 9 || phoneDigits.length > 15) {
+      toast.error('Sila masukkan nombor telefon yang sah 📱');
+      return;
+    }
+    if (attendance === 'hadir' && (!guestCount || Number(guestCount) < 1)) {
+      toast.error('Sila masukkan bilangan tetamu 🌸');
+      return;
+    }
     mutation.mutate({
       nama, // ✅ guna nama sebab kolum Supabase Nor ialah 'nama'
       phone,
       attendance,
-      guest_count: Number(guestCount),
+      guest_count: attendance === 'hadir' ? Number(guestCount) : 0,
     });
   };
 
@@ -105,30 +121,42 @@ export default function RSVPForm() {
             </div>
 
             <Input
-              placeholder="Nama"
+              placeholder="Nama *"
               value={nama}
               onChange={(e) => setNama(e.target.value)}
               className="bg-white/50 border-white/40 font-sans text-sm"
+              maxLength={100}
+              required
             />
             <Input
-              placeholder="No Telefon"
+              placeholder="No Telefon *"
+              type="tel"
+              inputMode="numeric"
               value={phone}
               onChange={(e) => setPhone(e.target.value)}
               className="bg-white/50 border-white/40 font-sans text-sm"
+              maxLength={20}
+              required
             />
             {attendance === 'hadir' && (
               <Input
                 type="number"
                 min="1"
-                placeholder="Bilangan tetamu"
+                placeholder="Bilangan tetamu *"
                 value={guestCount}
                 onChange={(e) => setGuestCount(e.target.value)}
                 className="bg-white/50 border-white/40 font-sans text-sm"
+                required
               />
             )}
             <Button
               type="submit"
-              disabled={mutation.isPending || !attendance || !nama.trim()}
+              disabled={
+                mutation.isPending ||
+                !attendance ||
+                !nama.trim() ||
+                phone.replace(/\D/g, '').length < 9
+              }
               className="w-full bg-primary/80 hover:bg-primary font-serif"
             >
               <Send className="w-4 h-4 mr-2" />
